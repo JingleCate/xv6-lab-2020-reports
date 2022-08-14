@@ -20,13 +20,13 @@
 
 ​	sleep.c文件：
 
-![sleep.c](/home/jinnian/Desktop/OS/实验报告/Images/exp1/sleep.png)
+![sleep.c](Images/exp1/sleep.png)
 
 ​	cmd_parse是枚举类型，作为parse_cmd函数的返回类型.enum {wrong_para, success_parse, too_many_paras} cmd_parse三个值分别表示输入的sleep参数错误、输入成功、太多参数。
 
 ​	sleep运行结果及自动评价:
 
-![sleep-qemu](/home/jinnian/Desktop/OS/实验报告/Images/exp1/sleep-qemu.png)
+![sleep-qemu](Images/exp1/sleep-qemu.png)
 
 
 
@@ -36,7 +36,7 @@
 
 本任务要求实现利用管道实现进程间的通信：父进程发送ping，子进程收到后发送pong，父进程收到后将其打印出来，下图方便理解
 
-![pingpong](/home/jinnian/Desktop/OS/实验报告/Images/exp1/pingpong-explaination.png)
+![pingpong](Images/exp1/pingpong-explaination.png)
 
 ​	Hints 1：利用pipe()函数创建管道，pipe()函数接收一个长度为2的数组，数组下标0为读端、1为写端；
 ​	Hints 2：利用fork()函数创建新的进程；
@@ -44,13 +44,13 @@
 
 ​	fd是文件描述符file description flag。每个进程都有一张表，而xv6 内核就以文件描述符作为这张表的索引，所以每个进程都有一个从0开始的文件描述符空间。按照惯例，进程从文件描述符0读入（标准输入），从文件描述符1输出（标准输出），从文件描述符2输出错误（标准错误输出）。	管道两端正是文件描述符，1表示输出，0表示读入，在其中任意一端操作都要关闭另一端(通过close系统调用)
 
-![pingpong](/home/jinnian/Desktop/OS/实验报告/Images/exp1/pingpong.png)
+![pingpong](Images/exp1/pingpong.png)
 
 ​	main函数中展示了子中的进程操作，先从管道中读出	buffer中四个字节，读之前先关闭管道的写端，读完后输出子进程接收到'ping'，然后向另一管道（xv6中的管道是单向的）中写端，同理，写之前应该关闭该管道的读一端。
 
 ​	pingpong运行结果及自动评价：
 
-![pingpong-qemu](/home/jinnian/Desktop/OS/实验报告/Images/exp1/pingpong-qemu.png)
+![pingpong-qemu](Images/exp1/pingpong-qemu.png)
 
 ---
 
@@ -58,13 +58,13 @@
 
 ​	本任务要求完成质数筛选器，它要求用fork和pipe实现：输入为2 ~ 35，输出为2 ~ 35间的所有质数，例如：2、3、5、7等。第一次我们将2 ~ 35给到一个进程，这个进程发现给到的第一个数为2，则输出2，然后将不能被2除尽的数（3、5、7、9……）发送给下一个进程，下一个进程发现给到的第一个数为3，则输出3，然后将不能被3除尽的数（5、7……）发送给下一个进程……以此类推。下图辅助理解：
 
-![primes-explanation](/home/jinnian/Desktop/OS/实验报告/Images/exp1/primes-explanation.png)
+![primes-explanation](Images/exp1/primes-explanation.png)
 
 ​	`read(fd, buf, n)`从 `fd` 读最多n 个字节（`fd`可能没有n 个字节），将它们拷贝到 `buf` 中，然后返回读出的字节数。每一个指向文件的文件描述符都和一个偏移关联（文件内指针）。`read`从当前文件偏移处读取数据，然后把偏移增加读出字节数。紧随其后的 `read` 会从新的起点开始读数据。当没有数据可读时，`read`就会返回0，这就表示文件结束了。
 
 ​	`write(fd, buf, n)`写 `buf` 中的n 个字节到 `fd` 并且返回实际写出的字节数。如果返回值小于n 那么只可能是发生了错误。就像 `read` 一样，`write`也从当前文件的偏移处开始写，在写的过程中增加这个偏移。
 
-![primes](/home/jinnian/Desktop/OS/实验报告/Images/exp1/primes.png)
+![primes](Images/exp1/primes.png)
 
 主函数如下：
 
@@ -108,7 +108,7 @@ int main()
 
 ​	primes运行结果及自动评价：
 
-![primes-qemu](/home/jinnian/Desktop/OS/实验报告/Images/exp1/primes-qemu.png)
+![primes-qemu](Images/exp1/primes-qemu.png)
 
 ---
 
@@ -116,7 +116,7 @@ int main()
 
 ​	本任务要求写一个find函数，其基本用法为 find arg1 arg2， 即在目录arg1下找到arg2。这和file system有关。任务的一个Hint：Look at user/ls.c to see how to read directories。参考ls.c的写法。再复制grep.c的正则匹配代码，匹配目录或文件
 
-![find](/home/jinnian/Desktop/OS/实验报告/Images/exp1/find.png)
+![find](Images/exp1/find.png)
 
 ​	其中用到了两个函数：`fstat` 可以获取一个文件描述符指向的文件的信息。它填充一个名为 `stat` 的结构体（程序中为实例化的st），它在 `stat.h` 中定义为：
 
@@ -134,13 +134,13 @@ struct stat {
 
 ​	find运行结果及自动评价：
 
-![find-qemu](/home/jinnian/Desktop/OS/实验报告/Images/exp1/find-qemu1.png)
+![find-qemu](Images/exp1/find-qemu1.png)
 
-![find-qemu](/home/jinnian/Desktop/OS/实验报告/Images/exp1/find-qemu2.png)
+![find-qemu](Images/exp1/find-qemu2.png)
 
 ##  Assignment 5 —— xargs:star:
 
-![xargs](/home/jinnian/Desktop/OS/实验报告/Images/exp1/xargs.png)
+![xargs](Images/exp1/xargs.png)
 
 多参数实现，当用户输入"ctrl+d"时停止参数的输入。这里要说明的是：对于输入的命令，我们要用exec执行，其中exec接收两个参数，第一个参数为命令cmd，第二个参数为一个数组，该数组的格式必须为{cmd, “arg1”, “arg2”, …, 0}，以下是`xargstest.sh`中的内容
 
@@ -159,7 +159,7 @@ find . b | xargs grep hello
 
 ​	xargs运行结果及自动评价：
 
-![xargs-qemu](/home/jinnian/Desktop/OS/实验报告/Images/exp1/xargs-qemu.png)
+![xargs-qemu](Images/exp1/xargs-qemu.png)
 
 ​	由于第一次实验时已经创建了a和b文件夹，所以再一次创建会失败。
 
@@ -175,7 +175,7 @@ find . b | xargs grep hello
 
 ​	本任务中要求添加一个系统调用跟踪功能，该功能可能会在以后调试实验时帮助您。您将创建一个新的`trace`系统调用来控制跟踪。它应该采用一个参数`mask`，int 整数类型，其位指定要跟踪的系统调用。例如，为了跟踪 fork 系统调用，程序调用`trace(1 << SYS_fork)`，其中`SYS_fork`是来自`kernel/syscall.h`的系统调用号。如果掩码中设置了系统调用号，则必须修改 xv6 内核以在每个系统调用即将返回时打印一行。该行应包含进程 id、系统调用的名称和返回值；不需要打印系统调用参数。`trace`系统调用应该启用对调用它的进程以及它随后产生的任何子进程的跟踪，但不应影响其他进程。
 
-​	系统调用原理（以 fork 为例）：![syscall](/home/jinnian/Desktop/OS/实验报告/Images/exp2/syscall-theory.png)
+​	系统调用原理（以 fork 为例）：![syscall](Images/exp2/syscall-theory.png)
 
 ​	该实验需要打印其他系统调用的信息。根据上面的分析和文档说明，首先需要给user.h、usys.pl（用来生成usys.S的辅助脚本）和syscall.h添加对应的函数的系统调用号，然后给syscall.c的系统调用数组添加对应的函数指针和函数头，在sysproc.c添加对应的函数实现，sysproc.c里主要是接收参数并给proc结构体复制，具体代码如下：
 
@@ -281,9 +281,9 @@ allocproc(void)
 
 `trace`运行结果及自动评测：结构是`pid: syscall '调用类型' -> 返回值`
 
-![syscall](/home/jinnian/Desktop/OS/实验报告/Images/exp2/syscall1.png)
+![syscall](Images/exp2/syscall1.png)
 
-![syscall](/home/jinnian/Desktop/OS/实验报告/Images/exp2/syscall2.png)
+![syscall](Images/exp2/syscall2.png)
 
 ---
 
@@ -368,9 +368,9 @@ uint64 sys_sysinfo(void)
 
 ​	运行结果及自动评分：
 
-![sysinfo](/home/jinnian/Desktop/OS/实验报告/Images/exp2/sysinfo1.png)
+![sysinfo](Images/exp2/sysinfo1.png)
 
-![sysinfo](/home/jinnian/Desktop/OS/实验报告/Images/exp2/sysinfo2.png)
+![sysinfo](Images/exp2/sysinfo2.png)
 
 ​	由于实验最后有一项提交`time.txt`文件的要求，没有提交故`FAIL`
 
@@ -450,7 +450,7 @@ void vmprint(pagetable_t pagetable)
 
 ​	`vmprint`运行结果：
 
-![vmprint](/home/jinnian/Desktop/OS/实验报告/Images/exp3/vmprint.png)
+![vmprint](Images/exp3/vmprint.png)
 
 ---
 
@@ -831,7 +831,7 @@ Ctrl-D
 
 - 堆栈帧布局，请注意，返回地址位于距堆栈帧的帧指针的固定偏移量 (-8) 处，而保存的帧指针位于距帧指针的固定偏移量 (-16) 处。
 
-  ![stack](/home/jinnian/Desktop/OS/实验报告/Images/exp4/stackframe.png)
+  ![stack](Images/exp4/stackframe.png)
 
   fp 指向当前栈帧的开始地址，sp 指向当前栈帧的结束地址。（栈从高地址往低地址生长，所以 fp 虽然是帧开始地址，但是地址比 sp 高）。栈帧中从高到低第一个 8 字节 `fp-8` 是 return address，也就是当前调用层应该返回到的地址。栈帧中从高到低第二个 8 字节 `fp-16` 是 previous address，指向上一层栈帧的 fp 开始地址。剩下的为保存的寄存器、局部变量等。一个栈帧的大小不固定，但是至少 16 字节。 在 xv6 中，使用一个页来存储栈，如果 fp 已经到达栈页的上界，则说明已经到达栈底。
 
@@ -853,7 +853,7 @@ void backtrace() {
 
 ​	实验运行结果：
 
-![backtrace](/home/jinnian/Desktop/OS/实验报告/Images/exp4/backtrace.png)
+![backtrace](Images/exp4/backtrace.png)
 
 ---
 
@@ -999,7 +999,7 @@ void backtrace() {
 
   ​	实验运行结果：
 
-  ![alarm](/home/jinnian/Desktop/OS/实验报告/Images/exp4/alarmtest.png)
+  ![alarm](Images/exp4/alarmtest.png)
 
   ​	测试结果：
 
@@ -1191,7 +1191,7 @@ void backtrace() {
 
   运行结果及评分：
 
-  ![grade](/home/jinnian/Desktop/OS/实验报告/Images/exp6/grade1.png)
+  ![grade](Images/exp6/grade1.png)
 
   ![grade](Images/exp6/grade1.png)
 
@@ -1381,7 +1381,7 @@ if((pte == 0) || ((*pte & PTE_V) == 0)) {
 
 运行结果及评分：
 
-![grade](/home/jinnian/Desktop/OS/实验报告/Images/exp6/grade1.png)
+![grade](Images/exp6/grade1.png)
 
 ![grade](Images/exp6/grade1.png)
 
@@ -1403,7 +1403,7 @@ if((pte == 0) || ((*pte & PTE_V) == 0)) {
 
   > 基于cow的fork()函数只在子进程中创建指向父进程物理页面的页表，而不创建真实的物理页面；在调用fork()函数后，子进程和父进程的PTE（page table entry）均被置为不可写，并且予以一个COW标记（每个 PTE，有一种方法来记录它是否是 COW 映射可能很有用。为此，可以使用 RISC-V PTE 中的 RSW（为软件保留）位），表示该PTE是属于cow的，这样，当其中一个进程要写的时候，就会在trap.c中捕捉到写错误同时发现va对应的PTE是被COW标记的，就会对原物理页进行复制操作，并修改该PTE映射的物理页为被复制的物理页。此外还需要注意一个细节：我们应该为每一块物理页面添加一个引用指针，用于记录它被进程引用的次数。当其引用次数为0的时候，我们就应该将其释放。这种情况对应着两个进程都复制了原物理页，那么原物理页就没有存在的必要了，调用kfree释放即可。如下：
   >
-  > ![explain](/home/jinnian/Desktop/OS/实验报告/Images/exp5/explain.png)
+  > ![explain](Images/exp5/explain.png)
 
 ​	Hints：
 
@@ -1625,7 +1625,7 @@ if((pte == 0) || ((*pte & PTE_V) == 0)) {
 
 ​	运行结果及评分：
 
-![grade](/home/jinnian/Desktop/OS/实验报告/Images/exp5/garde.png)
+![grade](Images/exp5/garde.png)
 
 ---
 
@@ -1683,15 +1683,15 @@ if((pte == 0) || ((*pte & PTE_V) == 0)) {
 
 - 在 `thread_schedule() `中调用` thread_switch()` --该函数应该在 `uthread_switch.S `中实现
 
-  ![img](/home/jinnian/Desktop/OS/实验报告/Images/exp7/thread_switch.png)
+  ![img](Images/exp7/thread_switch.png)
 
 - `thread_switch() `只需要保存和还原唤醒线程和被唤醒线程的上下文
 
 ​	运行结果：
 
-![a11](/home/jinnian/Desktop/OS/实验报告/Images/exp7/a11.png)
+![a11](Images/exp7/a11.png)
 
-![a12](/home/jinnian/Desktop/OS/实验报告/Images/exp7/a12.png)
+![a12](Images/exp7/a12.png)
 
 ---
 
@@ -1841,7 +1841,7 @@ barrier()
 
 ​	运行结果及评分：
 
- ![grade](/home/jinnian/Desktop/OS/实验报告/Images/exp7/grade.png)
+ ![grade](Images/exp7/grade.png)
 
 ---
 
@@ -2011,7 +2011,7 @@ kalloc(void)
 
 **运行结果：**
 
-![alloctest](/home/jinnian/Desktop/OS/实验报告/Images/exp8/alloctest.png)
+![alloctest](Images/exp8/alloctest.png)
 
 ---
 
@@ -2237,11 +2237,11 @@ brelse(struct buf *b)
 
 **运行测试：**
 
-![test](/home/jinnian/Desktop/OS/实验报告/Images/exp8/bcathetest.png)
+![test](Images/exp8/bcathetest.png)
 
 **评分：**
 
-![grade](/home/jinnian/Desktop/OS/实验报告/Images/exp8/grade.png)
+![grade](Images/exp8/grade.png)
 
 ---
 
@@ -2257,7 +2257,7 @@ brelse(struct buf *b)
 >
 > 磁盘上的 i 节点由结构体 `dinode`定义
 >
-> ![fsexp](/home/jinnian/Desktop/OS/实验报告/Images/exp9/fsexp.png)
+> ![fsexp](Images/exp9/fsexp.png)
 >
 > - `type` 域用来区分文件、目录和特殊文件的 i 节点。如果 `type` 是0的话就意味着这是一个空闲的 i 节点。
 >
@@ -2384,7 +2384,7 @@ if (ip->addrs[NDIRECT+1]) {
 
 **运行结果：**
 
-![largefile](/home/jinnian/Desktop/OS/实验报告/Images/exp9/largefile.png)
+![largefile](Images/exp9/largefile.png)
 
 ## Assignment 2 ——  Symbolic links
 
@@ -2486,11 +2486,11 @@ if (ip->type == T_SYMLINK) {
 
 **运行结果：**
 
-![symboliclink](/home/jinnian/Desktop/OS/实验报告/Images/exp9/symboliclink.png)
+![symboliclink](Images/exp9/symboliclink.png)
 
 **评分：**
 
-![grade](/home/jinnian/Desktop/OS/实验报告/Images/exp9/grade.png)
+![grade](Images/exp9/grade.png)
 
 ---
 
@@ -2502,7 +2502,7 @@ if (ip->type == T_SYMLINK) {
 
 > mmap：将一个文件或者其他对象映射到进程的地址空间，实现文件磁盘地址和进程虚拟地址空间中一段虚拟地址的一一对应关系。
 >
-> ![mmap](/home/jinnian/Desktop/OS/实验报告/Images/exp10/mmapexp.png)
+> ![mmap](Images/exp10/mmapexp.png)
 >
 > 为什么要建立文件磁盘地址和进程虚拟地址空间的映射？因为常规的文件系统操作是用户态发起`read`syscall，然后在buffer cache中查找是否有相应的数据，如果没有就从磁盘中拷贝数据到buffer cache中，因为buffer cache处在内核态，因此需要将buffer cache`copyout`到用户进程的虚拟内存中，这就需要2次拷贝操作，而在mmap中只需要直接将文件数据拷贝到对应的用户空间虚拟内存即可。
 
@@ -2743,11 +2743,11 @@ _filewrite(struct file *f, uint64 addr, int n, uint off) {
 
 **运行结果：**
 
-![mmapqemu](/home/jinnian/Desktop/OS/实验报告/Images/exp10/mmaptest.png)
+![mmapqemu](Images/exp10/mmaptest.png)
 
 **评分**：
 
-![grade](/home/jinnian/Desktop/OS/实验报告/Images/exp10/grade.png)
+![grade](Images/exp10/grade.png)
 
 ---
 
